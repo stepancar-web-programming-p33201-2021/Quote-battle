@@ -1,0 +1,47 @@
+:root{
+    --height: 120px;
+    --img-width: 120px;
+    --p-width: 200px;
+  }
+
+.StatQuote p,
+.StatQuote img,
+.StatQuote button{
+    height: 100%;
+    display: inline-block;
+    padding: 0 8px;
+    vertical-align: middle;
+}
+
+.StatQuote p{
+    width: var(--p-width);
+    margin: 0;
+}
+
+.StatQuote img{
+    object-fit: cover;
+    width: var(--img-width);
+    border-radius: 10%;
+}
+
+.StatQuote button{
+    vertical-align:middle;
+    background: transparent;
+    border: none;
+    color: #999;
+}
+
+.StatQuote  button:hover{
+    color: #39c;
+}
+
+.StatQuote  button:disabled{
+    color: transparent;
+}
+
+.StatQuote{
+    padding: 8px;
+    height: var(--height);
+    display: inline-block;
+    background-color: #f9f9f9;
+}

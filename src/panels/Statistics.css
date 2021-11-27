@@ -1,0 +1,36 @@
+:root{
+    --bar-height: 256px;
+    --back-color: 
+  }
+
+.Bar p{
+    display: block;
+    text-align: center;
+    margin: 0;
+    color: #999;
+}
+.Bar div{
+    display: block;
+    width: 50px;
+    margin: auto;
+}
+
+.Other{
+    background-color: #9cc;
+}
+.Max{
+    background-color: #39c;
+}
+
+.Bar{
+    height: inherit;
+    float: left;
+    margin: 0 24px;
+}
+
+.Bars{
+    padding: 16px;
+    height: var(--bar-height);
+    display: inline-block;
+    background-color: #f9f9f9;
+}
