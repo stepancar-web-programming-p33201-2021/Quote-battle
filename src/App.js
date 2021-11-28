@@ -7,13 +7,14 @@ import Bars from './panels/Statistics';
 import Panel from './panels/Panel';
 import StatQuote from './panels/StatQuote';
 import DatePicker from './panels/DatePicker';
+import OfferForm from './panels/OfferForm';
 import './App.css';
 
 const App = () => {
 	return (
 		<AdaptivityProvider>
 			<AppRoot>
-				<DatePicker/>
+				<OfferForm/>
 			</AppRoot>
 		</AdaptivityProvider>
 	);
