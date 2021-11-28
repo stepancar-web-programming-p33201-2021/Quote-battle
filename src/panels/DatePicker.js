@@ -8,10 +8,9 @@ import './DatePicker.css';
 
 const DatePicker = (props) => {
     const now = new Date();
-    const [date, setDate] = useState(now);
-    const [Day, setDay] = useState(now.getDate);
-    const [Month, setMonth] = useState(now.getMonth);
-    const [Year, setYear] = useState(now.getFullYear);
+    const [Day, setDay] = useState(now.getDate());
+    const [Month, setMonth] = useState(now.getMonth());
+    const [Year, setYear] = useState(now.getFullYear());
     
 
     function jump(e) {
@@ -30,56 +29,48 @@ const DatePicker = (props) => {
 
     function changed(e){
         var x=e.target.value;
-        debugger
         const form = e.target.form;
         const index = Array.prototype.indexOf.call(form, e.target);
         switch(index){
             case 0:
-                if(x>31||x<1)
-                    updateDay(date.getMonth(),date.getFullYear(),e.target)
-                else {
-                    let maxDays = 32 - new Date(date.getFullYear(), date.getMonth(), 32).getDate();
-                    if (x<=maxDays){
-                        date.setDate(Math.max(1,Math.min(maxDays,x)))
-                        debugger
-                        //e.target.value=date.getDate()
-                    }
-                    else
-                        form.elements[index + 1].value=''
-                }
+                updateDay(Month,Year,e.target)
                 break;
             case 1:
                 let newMonth = Math.max(0,Math.min(11,x-1))
-                updateDay(newMonth,date.getFullYear(),form.elements[0])
-                date.setMonth(newMonth)
-                e.target.value=date.getMonth()+1
+                updateDay(newMonth,Year,form.elements[0])
+                setMonth(newMonth)
                 break;
             case 2:
-                updateDay(date.getMonth(),x,form.elements[0])
-                date.setFullYear(x)
+                updateDay(Month,x,form.elements[0])
+                setYear(x)
                 break;
         }
     }
 
     function updateDay(month,year, inp){
-        debugger
         let maxDays = 32 - new Date(year, month, 32).getDate();
-        date.setDate(Math.max(1,Math.min(maxDays,inp.value)))
-        inp.value=date.getDate()
+        setDay(Math.max(1,Math.min(maxDays,inp.value)))
+    }
+
+    function updateDate(delta){
+        let d = new Date(Year, Month, Day+delta)
+        setDay(d.getDate());
+        setMonth(d.getMonth());
+        setYear(d.getFullYear());
     }
 
 	return (
 	<div className="DatePicker">
-        <button className="prev" onClick={(e) => {date.setDate(date.getDate()-1)}}>◀</button>
+        <button className="prev" onClick={(e) => {updateDate(-1)}}>◀</button>
         <form className="Date">
-            <input type='number' className="Day" defaultValue={date.getDate()}
+            <input type='number' className="Day" value={Day}
              maxlength="2"  onChange={jump} onFocus={(e)=>e.target.select()} onBlur={changed}/>.
-            <input type='number' className="Month" defaultValue={1+date.getMonth()} 
+            <input type='number' className="Month" value={1+Month} 
             maxlength="2"  onChange={jump} onFocus={(e)=>e.target.select()} onBlur={changed}/>.
-            <input type='number' className="Year" defaultValue={date.getFullYear()} 
+            <input type='number' className="Year" value={Year} 
             maxlength="4"  onChange={jump} onFocus={(e)=>e.target.select()} onBlur={changed}/> 
         </form>
-        <button className="next" onClick={(e) => {date.setDate(date.getDate()+1)}} >▶</button>
+        <button className="next" onClick={(e) => {updateDate(1)}} >▶</button>
 	</div>
     )
 }
