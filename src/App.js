@@ -8,14 +8,17 @@ import {
 } from 'react-router-dom';
 
 import Panel from './panels/Panel';
+import Election from './Election';
+import Offer from './Offer';
+import Statistics from './Statistics';
 
 
 const App = () => (
   <Router>
 	<Routes>
-        <Route path="/statistics" component={()=><h2>Stat</h2>}/>
-        <Route path="/offer" component={()=><h2>Offer</h2>}/>
-        <Route path="/" component={()=><h2>Voting</h2>}/>
+        <Route path="/statistics" component={Statistics}/>
+        <Route path="/offer" component={Offer}/>
+        <Route path="/" component={Election}/>
       </Routes>
 	  <Panel/>
   </Router>

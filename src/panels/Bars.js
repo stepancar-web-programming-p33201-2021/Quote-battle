@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './Statistics.css';
+import './Bars.css';
 
 const barPercent = 90;
 
