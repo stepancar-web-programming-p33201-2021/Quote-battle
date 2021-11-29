@@ -1,23 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import bridge from '@vkontakte/vk-bridge';
-import { View, ScreenSpinner, AdaptivityProvider, AppRoot, Button } from '@vkontakte/vkui';
-import '@vkontakte/vkui/dist/vkui.css';
+import {Switch } from '@vkontakte/vkui';
+import React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch as Routes,
+  Route,
+  Link,
+} from 'react-router-dom';
 
-import Bars from './panels/Statistics';
 import Panel from './panels/Panel';
-import StatQuote from './panels/StatQuote';
-import DatePicker from './panels/DatePicker';
-import OfferForm from './panels/OfferForm';
-import './App.css';
 
-const App = () => {
-	return (
-		<AdaptivityProvider>
-			<AppRoot>
-				<OfferForm/>
-			</AppRoot>
-		</AdaptivityProvider>
-	);
-}
+
+const App = () => (
+  <Router>
+	<Routes>
+        <Route path="/statistics" component={()=><h2>Stat</h2>}/>
+        <Route path="/offer" component={()=><h2>Offer</h2>}/>
+        <Route path="/" component={()=><h2>Voting</h2>}/>
+      </Routes>
+	  <Panel/>
+  </Router>
+);
 
 export default App;
