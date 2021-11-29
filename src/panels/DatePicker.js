@@ -6,7 +6,7 @@ import brat from '../img/brat.jpg';
 
 import './DatePicker.css';
 
-const DatePicker = (props) => {
+export const DatePicker = (props) => {
     const now = new Date();
     const [Day, setDay] = useState(now.getDate());
     const [Month, setMonth] = useState(now.getMonth());
@@ -58,6 +58,10 @@ const DatePicker = (props) => {
         setMonth(d.getMonth());
         setYear(d.getFullYear());
     }
+
+    useEffect(()=>{
+        props.propagateDate(Year, Month, Day)
+    })
 
 	return (
 	<div className="DatePicker">

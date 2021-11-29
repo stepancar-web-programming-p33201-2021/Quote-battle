@@ -1,47 +1,67 @@
 :root{
-    --height: 120px;
+    --quote-height: 120px;
     --img-width: 120px;
     --p-width: 200px;
   }
 
-.StatQuote p,
-.StatQuote img,
-.StatQuote button{
+.Quote p,
+.Quote img,
+.Quote button{
     height: 100%;
     display: inline-block;
     padding: 0 8px;
     vertical-align: middle;
 }
 
-.StatQuote p{
+.Quote p{
     width: var(--p-width);
     margin: 0;
 }
 
-.StatQuote img{
+.Quote img{
     object-fit: cover;
     width: var(--img-width);
     border-radius: 10%;
 }
 
-.StatQuote button{
+.Quote button{
     vertical-align:middle;
     background: transparent;
     border: none;
     color: #999;
 }
 
-.StatQuote  button:hover{
+.Quote  button:hover{
     color: #39c;
 }
 
-.StatQuote  button:disabled{
+.Quote  button:disabled{
     color: transparent;
 }
 
-.StatQuote{
+.Quote{
     padding: 8px;
-    height: var(--height);
+    height: var(--quote-height);
+    display: flex;
+    justify-content: center;
+}
+
+
+.points{
+    display: block;
+    width: 48px;
+    margin: auto;
+}
+
+.point{
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    margin: 2px;
     display: inline-block;
-    background-color: #f9f9f9;
+    background: #ccc;
+}
+
+.point[itemtype='active']{
+    background: #999;
 }

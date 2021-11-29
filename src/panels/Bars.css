@@ -21,6 +21,9 @@
 .Max{
     background-color: #39c;
 }
+.Max,.Other{
+    border-radius: 4px;
+}
 
 .Bar{
     height: inherit;
@@ -31,6 +34,7 @@
 .Bars{
     padding: 16px;
     height: var(--bar-height);
-    display: inline-block;
-    background-color: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 16px;
 }
