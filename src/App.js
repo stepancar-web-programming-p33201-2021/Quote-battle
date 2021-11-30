@@ -1,4 +1,5 @@
 import React from "react";
+import "./App.css"
 import {
     AdaptivityProvider,
     useAdaptivity,
@@ -34,6 +35,7 @@ import {
     Icon56WriteOutline,
     Icon28MessageHeartOutline
 } from "@vkontakte/icons";
+import CustomCard from "./CustomCard";
 
 const App = () => {
     const {viewWidth} = useAdaptivity();
@@ -130,8 +132,9 @@ const App = () => {
                                     <Group>
                                         <FormLayout>
                                             <FormLayoutGroup mode="vertical">
-                                                <FormItem top="Цитата" bottom="Максимальная длина цитаты составляет N символов">
-                                                    <Textarea placeholder="Напишите здесь" />
+                                                <FormItem top="Цитата"
+                                                          bottom="Максимальная длина цитаты составляет N символов">
+                                                    <Textarea placeholder="Напишите здесь"/>
                                                 </FormItem>
                                                 <FormItem top="Категория">
                                                     <CustomSelect
@@ -152,7 +155,8 @@ const App = () => {
                                                     />
                                                 </FormItem>
                                                 <FormItem>
-                                                    <Button size="m" style={{ width: outerWidth }}>Предложить цитату</Button>
+                                                    <Button size="m" style={{width: outerWidth}}>Предложить
+                                                        цитату</Button>
                                                 </FormItem>
                                             </FormLayoutGroup>
                                         </FormLayout>
@@ -162,25 +166,34 @@ const App = () => {
                             <View id="vote" activePanel="vote">
                                 <Panel id="vote">
                                     <PanelHeader left={<PanelHeaderBack/>}>Голосовать</PanelHeader>
-                                    <Group>
-                                        <CardGrid size="l">
-                                            <Card mode="shadow">
-                                                <div style={{height: 96}}/>
-                                            </Card>
-                                            <Spacing/>
-                                            <Card mode="shadow">
-                                                <div style={{height: 96}}/>
-                                            </Card>
-                                            <Spacing/>
-                                            <Card mode="shadow">
-                                                <div style={{height: 96}}/>
-                                            </Card>
-                                            <Spacing/>
-                                            <Card mode="shadow">
-                                                <div style={{height: 96}}/>
-                                            </Card>
-                                        </CardGrid>
-                                    </Group>
+                                    <div style={{paddingLeft: 16, paddingRight: 16}}>
+                                        <CustomCard quote_type="woof" quote="Woof"/>
+                                        <Spacing/>
+                                        <CustomCard quote_type="samurai" quote="Harakiri"/>
+                                        <Spacing/>
+                                        <CustomCard quote_type="cowboy" quote="Poof"/>
+                                        <Spacing/>
+                                        <CustomCard quote_type="guys" quote="Bro"/>
+                                    </div>
+                                    {/*<Group>*/}
+                                    {/*    <CardGrid size="l">*/}
+                                    {/*        <Card class="wolf" mode="shadow">*/}
+                                    {/*            <div style={{height: 96}}/>*/}
+                                    {/*        </Card>*/}
+                                    {/*        <Spacing/>*/}
+                                    {/*        <Card mode="shadow">*/}
+                                    {/*            <div style={{height: 96}}/>*/}
+                                    {/*        </Card>*/}
+                                    {/*        <Spacing/>*/}
+                                    {/*        <Card mode="shadow">*/}
+                                    {/*            <div style={{height: 96}}/>*/}
+                                    {/*        </Card>*/}
+                                    {/*        <Spacing/>*/}
+                                    {/*        <Card mode="shadow">*/}
+                                    {/*            <div style={{height: 96}}/>*/}
+                                    {/*        </Card>*/}
+                                    {/*    </CardGrid>*/}
+                                    {/*</Group>*/}
                                 </Panel>
                             </View>
                             <View id="statistics" activePanel="statistics">
