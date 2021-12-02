@@ -36,7 +36,7 @@
 }
 
 .Quote  button:disabled{
-    color: transparent;
+    opacity: 0;
 }
 
 .Quote{

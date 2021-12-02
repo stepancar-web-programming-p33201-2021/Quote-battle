@@ -1,15 +1,39 @@
 import React, { useState, useEffect } from 'react';
 
+import DatePicker from './panels/DatePicker'
 import Bars from './panels/Bars';
+import StatQuote from './panels/StatQuote';
+
+const empty=[{type:"wolf", text:"—", count: 0}, 
+{type:"samurai", text:"—", count: 0},
+{type:"cowboy", text:"—", count: 0},
+{type:"brat", text:"—", count: 0}]
+
+
 
 const Statistics = (props) => {
+	const [date, setDate] = useState(new Date())
+    const [quotes, setQuotes] = useState(empty);
+
+	async function getQuotes(Year, Month, Day){
+		var url = new URL("http://localhost:8000/quote/used")
+		url.searchParams.append('Day', Day)
+		url.searchParams.append('Month', Month+1)
+		url.searchParams.append('Year', Year)
+		await fetch(url, {method:'GET',headers:{"Access-Control-Allow-Origin":'*'}}).then(
+			response=>response.json()
+		).then((response)=>response.length>0?setQuotes(response):setQuotes(empty))
+	}
+
+	useEffect(()=>{
+		getQuotes(date.getFullYear(),date.getMonth(),date.getDate())
+	},[date])
     
 	return (
 	<div className="Statistics">
-        <Bars values={[{name:"Cowboy", value:120}, 
-				{name:"Samurai", value:365},
-				{name:"Wolf", value:87},
-				{name:"Brat", value:60}]}></Bars>
+        <DatePicker propagateDate={(Y,M,D)=>{setDate(new Date(Y,M,D))}}/>
+        <Bars quotes={quotes}/>
+        <StatQuote quotes={quotes}/>
 	</div>
     )
 }

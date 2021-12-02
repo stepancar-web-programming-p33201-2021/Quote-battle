@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { Icon28ChevronRightOutline as Right} from '@vkontakte/icons';
+import { Icon28ChevronLeftOutline as Left} from '@vkontakte/icons';
 import wolf from '../img/wolf.jpg';
 import samurai from '../img/samurai.jpg';
 import cowboy from '../img/cowboy.jpg';
@@ -8,13 +10,13 @@ import './StatQuote.css';
 
 function getImage(param) {
     switch(param) {
-        case 'Wolf':
+        case 'wolf':
             return wolf;
-        case 'Samurai':
+        case 'samurai':
             return samurai;
-        case 'Cowboy':
+        case 'cowboy':
             return cowboy;
-        case 'Brat':
+        case 'brat':
             return brat;
     }
   }
@@ -25,10 +27,10 @@ const StatQuote = (props) => {
 	return (
 	<div className="StatQuote">
 	    <div className="Quote">
-            <button className="prev" onClick={() => setPlace(Math.max(place - 1,0))} disabled={place==0}>◀</button>
-            <img src={getImage(props.quotes[place].name)}/>
+            <button className="prev" onClick={() => setPlace(Math.max(place - 1,0))} disabled={place==0}><Left/></button>
+            <img src={getImage(props.quotes[place].type)} alt={props.quotes[place].type}/>
             <p>{props.quotes[place].text}</p>
-            <button className="next" onClick={() => setPlace(Math.min(place + 1,maxPlace))} disabled={place==maxPlace}>▶</button>
+            <button className="next" onClick={() => setPlace(Math.min(place + 1,maxPlace))} disabled={place==maxPlace}><Right/></button>
         </div>
         <div className="points">
             {[...Array(maxPlace+1).keys()].map((item)=><div className="point" value={item} 
@@ -39,8 +41,3 @@ const StatQuote = (props) => {
 }
 
 export default StatQuote;
-
-// <StatQuote quotes = {[{name:"Wolf", text:"Не тот волк, кто волк, а тот кто волк", count: 365}, 
-// 				{name:"Samurai", text:"Не бойся ножа, бойся вилки, один удар - четыре дырки", count: 36},
-// 				{name:"Cowboy", text:"Стреляй, а не болтай", count: 35},
-// 				{name:"Brat", text:"Стрелять будут по мне, а заденет вас", count: 5}]}></StatQuote>
