@@ -36,8 +36,6 @@ import {
     Icon28MessageHeartOutline
 } from "@vkontakte/icons";
 import CustomCard from "./CustomCard";
-import wolf from "./img/wolf.png";
-import MyCard from "./MyCard";
 
 const App = () => {
     const {viewWidth} = useAdaptivity();
@@ -170,7 +168,6 @@ const App = () => {
                                     <PanelHeader left={<PanelHeaderBack/>}>Голосовать</PanelHeader>
                                     <Spacing/>
                                     <div style={{paddingLeft: 16, paddingRight: 16}}>
-                                        <MyCard/>
                                         <CustomCard quote_type="woof" quote="Woof"/>
                                         <Spacing/>
                                         <CustomCard quote_type="samurai" quote="Harakiri"/>
