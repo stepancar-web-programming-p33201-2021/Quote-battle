@@ -1,15 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { Icon20ChevronRightOutline as Right} from '@vkontakte/icons';
 import { Icon20ChevronLeftOutline as Left} from '@vkontakte/icons';
-
 import '../css/DatePicker.css';
+import {useAppearance} from "@vkontakte/vkui";
 
 export const DatePicker = (props) => {
     const now = new Date();
     const [Day, setDay] = useState(now.getDate());
     const [Month, setMonth] = useState(now.getMonth());
     const [Year, setYear] = useState(now.getFullYear());
-    var lastval;
+    const appearance = useAppearance();
+
+    const light = {
+        backgroundColor: '#f2f3f5',
+        borderColor: 'rgba(0,0,0,0.12)',
+        color: '#6d7885'
+    }
+    const dark = {
+        backgroundColor: '#232324',
+        borderColor: 'rgba(255,255,255,0.12)',
+        color: '#909499'
+    }
     
     function moveToNext(e){
         const form = e.target.form;
@@ -76,7 +87,7 @@ export const DatePicker = (props) => {
     }
 
 	return (
-	<div className="DatePicker">
+	<div className="DatePicker" style={appearance === "light" ? light : dark}>
         <button className="prev" onClick={(e) => {updateDate(-1)}}><Left/></button>
         <form className="Date">
             <input type='number' className="Day" value={Day} maxlength="2"  
