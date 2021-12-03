@@ -1,8 +1,5 @@
 import React from "react";
 import {
-    Panel,
-    PanelHeader,
-    PanelHeaderBack, 
     Spacing
 } from "@vkontakte/vkui";
 import "@vkontakte/vkui/dist/vkui.css";

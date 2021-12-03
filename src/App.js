@@ -6,7 +6,6 @@ import {
     AppRoot,
     SplitLayout,
     SplitCol,
-    ViewWidth,
     View,
     Panel,
     PanelHeader,
@@ -17,22 +16,12 @@ import {
     Tabbar,
     Epic,
     TabbarItem,
-    Placeholder,
     PanelHeaderBack,
-    Card,
-    CardGrid,
-    FormLayoutGroup,
-    FormLayout,
-    FormItem,
-    Textarea,
-    CustomSelect,
-    Button, Spacing
 } from "@vkontakte/vkui";
 import "@vkontakte/vkui/dist/vkui.css";
 import {
     Icon28StatisticsOutline,
     Icon28WriteOutline,
-    Icon56WriteOutline,
     Icon28MessageHeartOutline
 } from "@vkontakte/icons";
 import Vote from "./Vote";

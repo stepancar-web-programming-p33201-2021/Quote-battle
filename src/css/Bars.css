@@ -1,6 +1,5 @@
 :root{
     --bar-height: 256px;
-    --back-color: 
   }
 
 .Bar p{
@@ -28,7 +27,7 @@
 .Bar{
     height: inherit;
     float: left;
-    margin: 0 24px;
+    margin: 0 5%;
 }
 
 .Bars{
