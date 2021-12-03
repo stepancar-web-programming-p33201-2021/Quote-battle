@@ -8,7 +8,7 @@ import {
     CustomSelect,
     Button
 } from "@vkontakte/vkui";
-import "@vkontakte/vkui/dist/vkui.css";
+// import "@vkontakte/vkui/dist/vkui.css";
 const maxlength = 200;
 
 
