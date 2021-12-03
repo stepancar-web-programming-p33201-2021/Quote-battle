@@ -31,7 +31,7 @@ const StatQuote = (props) => {
 	    <div className="Quote">
             <button className="prev" onClick={() => setPlace(Math.max(place - 1,0))} disabled={place==0}><Left/></button>
             <img src={getImage(props.quotes[place].type)} alt={props.quotes[place].type}/>
-            <p>{props.quotes[place].text}</p>
+            <p>{props.quotes[place].quote}</p>
             <button className="next" onClick={() => setPlace(Math.min(place + 1,maxPlace))} disabled={place==maxPlace}><Right/></button>
         </div>
         <div className="points">
