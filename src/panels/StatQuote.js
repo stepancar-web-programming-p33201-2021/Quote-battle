@@ -6,7 +6,7 @@ import samurai from '../img/samurai.jpg';
 import cowboy from '../img/cowboy.jpg';
 import brat from '../img/brat.jpg';
 
-import './StatQuote.css';
+import '../css/StatQuote.css';
 
 function getImage(param) {
     switch(param) {
@@ -22,8 +22,10 @@ function getImage(param) {
   }
 
 const StatQuote = (props) => {
-    const [place, setPlace] = useState(0);
+	const [place, setPlace]=[props.place, props.setPlace]
     const maxPlace=props.quotes.length-1;
+
+
 	return (
 	<div className="StatQuote">
 	    <div className="Quote">

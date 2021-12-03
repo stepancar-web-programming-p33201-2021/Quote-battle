@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import "./css/App.css"
 import {
     AdaptivityProvider,
     useAdaptivity,
@@ -25,7 +26,7 @@ import {
     FormItem,
     Textarea,
     CustomSelect,
-    Button, Spacing, DatePicker
+    Button, Spacing
 } from "@vkontakte/vkui";
 import "@vkontakte/vkui/dist/vkui.css";
 import {
@@ -34,26 +35,25 @@ import {
     Icon56WriteOutline,
     Icon28MessageHeartOutline
 } from "@vkontakte/icons";
+import Vote from "./Vote";
 import Statistics from "./Statistics";
-
-
+import Suggest from "./Suggest";
 
 const App = () => {
     const {viewWidth} = useAdaptivity();
     const platform = usePlatform();
     const [activeStory, setActiveStory] = React.useState('vote');
     const onStoryChange = (e) => setActiveStory(e.currentTarget.dataset.story);
-    const isDesktop = viewWidth >= ViewWidth.TABLET;
+    const isDesktop = viewWidth >= true//ViewWidth.TABLET;
     const hasHeader = platform !== VKCOM;
-
 
     return (
         <AdaptivityProvider>
             <AppRoot>
                 <SplitLayout
                     header={hasHeader && <PanelHeader separator={false}/>}
-                    style={{justifyContent: "center"}}
-                >
+                    style={{justifyContent: "center"}}>
+
                     {isDesktop && (
                         <SplitCol fixed width={280} maxWidth={280}>
                             <Panel>
@@ -104,8 +104,8 @@ const App = () => {
                         animate={!isDesktop}
                         spaced={isDesktop}
                         width={isDesktop ? '560px' : '100%'}
-                        maxWidth={isDesktop ? '560px' : '100%'}
-                    >
+                        maxWidth={isDesktop ? '560px' : '100%'}>
+
                         <Epic activeStory={activeStory} tabbar={!isDesktop &&
                         <Tabbar>
                             <TabbarItem
@@ -131,67 +131,20 @@ const App = () => {
                             <View id="suggest" activePanel="suggest">
                                 <Panel id="suggest">
                                     <PanelHeader left={<PanelHeaderBack/>}>Предложить</PanelHeader>
-                                    <Group>
-                                        <FormLayout>
-                                            <FormLayoutGroup mode="vertical">
-                                                <FormItem top="Цитата" bottom="Максимальная длина цитаты составляет N символов">
-                                                    <Textarea placeholder="Напишите здесь" />
-                                                </FormItem>
-                                                <FormItem top="Категория">
-                                                    <CustomSelect
-                                                        placeholder="Не выбрана"
-                                                        options={[{
-                                                            label: 'Самурайская цитата',
-                                                            value: 0
-                                                        }, {
-                                                            label: 'Волчья цитата',
-                                                            value: 1
-                                                        }, {
-                                                            label: 'Ковбойская цитата',
-                                                            value: 2
-                                                        }, {
-                                                            label: 'Пацанская цитата',
-                                                            value: 3
-                                                        }]}
-                                                    />
-                                                </FormItem>
-                                                <FormItem>
-                                                    <Button size="m" style={{ width: outerWidth }}>Предложить цитату</Button>
-                                                </FormItem>
-                                            </FormLayoutGroup>
-                                        </FormLayout>
-                                    </Group>
+                                    <Suggest/>
                                 </Panel>
                             </View>
                             <View id="vote" activePanel="vote">
                                 <Panel id="vote">
                                     <PanelHeader left={<PanelHeaderBack/>}>Голосовать</PanelHeader>
-                                    <Group>
-                                        <CardGrid size="l">
-                                            <Card mode="shadow">
-                                                <div style={{height: 96}}/>
-                                            </Card>
-                                            <Spacing/>
-                                            <Card mode="shadow">
-                                                <div style={{height: 96}}/>
-                                            </Card>
-                                            <Spacing/>
-                                            <Card mode="shadow">
-                                                <div style={{height: 96}}/>
-                                            </Card>
-                                            <Spacing/>
-                                            <Card mode="shadow">
-                                                <div style={{height: 96}}/>
-                                            </Card>
-                                        </CardGrid>
-                                    </Group>
+                                    <Vote/>
                                 </Panel>
                             </View>
                             <View id="statistics" activePanel="statistics">
                                 <Panel id="statistics">
                                     <PanelHeader left={<PanelHeaderBack/>}>Статистика</PanelHeader>
                                     <Group>
-                                    <Statistics/>
+                                        <Statistics/>
                                     </Group>
                                 </Panel>
                             </View>

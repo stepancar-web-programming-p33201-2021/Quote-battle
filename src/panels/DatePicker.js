@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Icon20ChevronRightOutline as Right} from '@vkontakte/icons';
 import { Icon20ChevronLeftOutline as Left} from '@vkontakte/icons';
 
-import './DatePicker.css';
+import '../css/DatePicker.css';
 
 export const DatePicker = (props) => {
     const now = new Date();

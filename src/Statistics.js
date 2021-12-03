@@ -14,6 +14,7 @@ const empty=[{type:"wolf", text:"—", count: 0},
 const Statistics = (props) => {
 	const [date, setDate] = useState(new Date())
     const [quotes, setQuotes] = useState(empty);
+    const [place, setPlace] = useState(0);
 
 	async function getQuotes(Year, Month, Day){
 		var url = new URL("http://localhost:8000/quote/used")
@@ -22,18 +23,20 @@ const Statistics = (props) => {
 		url.searchParams.append('Year', Year)
 		await fetch(url, {method:'GET',headers:{"Access-Control-Allow-Origin":'*'}}).then(
 			response=>response.json()
-		).then((response)=>response.length>0?setQuotes(response):setQuotes(empty))
+		).then((response)=>response.length>0?setQuotes(response.sort((a,b)=>a.count>=b.count?-1:1)):setQuotes(empty))
 	}
 
 	useEffect(()=>{
 		getQuotes(date.getFullYear(),date.getMonth(),date.getDate())
 	},[date])
+
+
     
 	return (
 	<div className="Statistics">
-        <DatePicker propagateDate={(Y,M,D)=>{setDate(new Date(Y,M,D))}}/>
-        <Bars quotes={quotes}/>
-        <StatQuote quotes={quotes}/>
+		<DatePicker propagateDate={(Y,M,D)=>{setDate(new Date(Y,M,D))}}/>
+		<Bars quotes={quotes} setPlace={setPlace}  place={place}/>
+		<StatQuote quotes={quotes} setPlace={setPlace} place={place}/>
 	</div>
     )
 }
