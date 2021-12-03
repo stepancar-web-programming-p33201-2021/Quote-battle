@@ -4,10 +4,10 @@ import DatePicker from './panels/DatePicker'
 import Bars from './panels/Bars';
 import StatQuote from './panels/StatQuote';
 
-const empty=[{type:"wolf", text:"—", count: 0}, 
-{type:"samurai", text:"—", count: 0},
-{type:"cowboy", text:"—", count: 0},
-{type:"brat", text:"—", count: 0}]
+const empty=[{type:"wolf", quote:"—", votes: 0},
+{type:"samurai", quote:"—", votes: 0},
+{type:"cowboy", quote:"—", votes: 0},
+{type:"brat", quote:"—", votes: 0}]
 
 
 
@@ -22,21 +22,10 @@ const Statistics = (props) => {
 
 	async function getQuotes(Year, Month, Day){
 		let url = 'http://localhost:8000/battle/'+Day+'-'+(Month+1)+'-'+Year
-
-		// var url = new URL("http://localhost:8000/quote/used")
-		// var url = new URL("http://localhost:8000/battle/")
-		// http://localhost:8000/battle/${Day}-${Month+1}-${Year}
-		// url.searchParams.append('Day', Day)
-		// url.searchParams.append('Month', Month+1)
-		// url.searchParams.append
-
-		// let tempResp;
 		await fetch(url, {method:'GET',headers:{"Access-Control-Allow-Origin":'*'}})
 			.then(response=>response.json())
 			.then(response => {
-			console.log('Start2')
-			console.log(response)
-			if (response['quotes'].length > 1) {
+				//todo Redo whole sorting
 				let tempQuote
 				let quotesList = [response['quotes']['0'], response['quotes']['1'], response['quotes']['2'], response['quotes']['3']]
 				for (let j = 0; j < 4; j++) {
@@ -48,35 +37,10 @@ const Statistics = (props) => {
 						}
 					}
 				}
-
-				console.log('Start1')
-				for (let i = 0; i < 4; i++) {
-					console.log(quotesList[i])
-				}
-
 				return quotesList
-			} else return []
-
-		}).then(response =>response.length>0?setQuotes(response):setQuotes(empty))
-
-
-		// then(response => tempResp = response)
-		//
-		// console.log(tempResp['quotes']['0']['quote'])
-		//
-		// console.log(response))
-		//
-		//
-		// response=>response.json()).then(console.log(response))
-		//
-		// await fetch(url, {method:'GET',headers:{"Access-Control-Allow-Origin":'*'}}).then(
-		// 	response=>response.json()
-		// ).then((response)=>response.length>0?setQuotes(response.sort((a,b)=>a.count>=b.count?-1:1)):setQuotes(empty))
-
+		}).then(response => setQuotes(response)).catch(function (e) {setQuotes(empty)})
 	}
 
-
-    
 	return (
 	<div className="Statistics">
 		<DatePicker propagateDate={(Y,M,D)=>{setDate(new Date(Y,M,D))}}/>
