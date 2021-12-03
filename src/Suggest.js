@@ -22,7 +22,7 @@ function Suggest(props) {
                 </FormItem>
                 <FormItem top="Категория">
                     <CustomSelect
-                        placeholder="Не выбрана"
+                        placeholder="Выберите категорию"
                         options={[{
                             label: 'Самурайская цитата',
                             value: 0
@@ -35,6 +35,9 @@ function Suggest(props) {
                         }, {
                             label: 'Пацанская цитата',
                             value: 3
+                        }, {
+                            label: 'Не выбрана',
+                            value: 4
                         }]}
                     />
                 </FormItem>
