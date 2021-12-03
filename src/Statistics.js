@@ -4,10 +4,10 @@ import DatePicker from './panels/DatePicker'
 import Bars from './panels/Bars';
 import StatQuote from './panels/StatQuote';
 
-const empty=[{type:"wolf", text:"—", count: 0}, 
-{type:"samurai", text:"—", count: 0},
-{type:"cowboy", text:"—", count: 0},
-{type:"brat", text:"—", count: 0}]
+const empty=[{type:"wolf", quote:"—", votes: 0}, 
+{type:"samurai", quote:"—", votes: 0},
+{type:"cowboy", quote:"—", votes: 0},
+{type:"brat", quote:"—", votes: 0}]
 
 
 
@@ -17,13 +17,9 @@ const Statistics = (props) => {
     const [place, setPlace] = useState(0);
 
 	async function getQuotes(Year, Month, Day){
-		var url = new URL("http://localhost:8000/quote/used")
-		url.searchParams.append('Day', Day)
-		url.searchParams.append('Month', Month+1)
-		url.searchParams.append('Year', Year)
-		await fetch(url, {method:'GET',headers:{"Access-Control-Allow-Origin":'*'}}).then(
-			response=>response.json()
-		).then((response)=>response.length>0?setQuotes(response.sort((a,b)=>a.count>=b.count?-1:1)):setQuotes(empty))
+		var url = new URL(`http://localhost:8000/battle/${Day}-${Month+1}-${Year}`)
+		await fetch(url, {method:'GET',headers:{"Access-Control-Allow-Origin":'*'}}).then(response=>response.json())
+		.then((response)=>setQuotes(response.quotes.sort((a,b)=>a.votes>=b.votes?-1:1))).catch(setQuotes(empty))
 	}
 
 	useEffect(()=>{

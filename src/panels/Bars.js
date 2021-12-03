@@ -14,7 +14,7 @@ const Bars = (props) => {
 		return (
 		<div className="Bar">
 			<div style={{height:(barPercent-props.height)+'%'}} className="space"/>
-			<p>{props.count}</p>
+			<p>{props.votes}</p>
 			<div style={{height:props.height+'%'}} className={(props.index==place?"Max":"Other")} onClick={()=>setPlace(props.index)}/> 
 			<p>{props.type}</p>
 		</div>
@@ -22,11 +22,11 @@ const Bars = (props) => {
 	}
 
 
-	let max = props.quotes.map(item => item.count).reduce((a,b)=>{return (a>b?a:b)}, 0)
+	let max = props.quotes.map(item => item.votes).reduce((a,b)=>{return (a>b?a:b)}, 0)
 	max=max==0?1:max
 	return (
 		<div className="Bars">
-			{props.quotes.map((item,index)=><Bar count={item.count} height={barPercent*item.count/max} type={item.type} index={index}/>)}
+			{props.quotes.map((item,index)=><Bar votes={item.votes} height={barPercent*item.votes/max} type={item.type} index={index}/>)}
 		</div>
     )
 }

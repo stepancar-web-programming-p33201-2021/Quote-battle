@@ -9,8 +9,8 @@ import "@vkontakte/vkui/dist/vkui.css";
 import {Icon28LikeFillRed, Icon28LikeOutline, Icon28ShareOutline} from "@vkontakte/icons";
 
 function CustomCard(props) {
-    const [isFlipped, setFlipped] = React.useState(false);
-    const [isLiked, setLiked] = React.useState(false);
+    const [isFlipped, setFlipped] = React.useState(props.liked);
+    const [isLiked, setLiked] = React.useState(props.liked);
     const woof = {
         backgroundImage: `url(${wolf})`,
         backgroundSize: 'cover'
@@ -49,6 +49,7 @@ function CustomCard(props) {
     function clickLike(e){
         e.stopPropagation()
         setLiked((prev) => !prev)
+        props.setLike(props.quote_type)
     }
 
 
@@ -56,8 +57,8 @@ function CustomCard(props) {
 
         <ReactCardFlip isFlipped={isFlipped} flipDirection="vertical">
             <Card
-                style={props.quote_type === "woof" ? woof : props.quote_type === "samurai" ? samurai : props.quote_type === "cowboy" ? cowboy : guys}
-                onClick={() => setFlipped((prev) => !prev)}
+                style={props.quote_type === "wolf" ? woof : props.quote_type === "samurai" ? samurai : props.quote_type === "cowboy" ? cowboy : guys}
+                onClick={() => {setFlipped((prev) => !prev);}}
                 mode="shadow">
                 <div style={{height: 116}}/>
             </Card>
