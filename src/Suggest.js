@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
     Group,
     FormLayoutGroup,
@@ -9,19 +9,40 @@ import {
     Button
 } from "@vkontakte/vkui";
 import "@vkontakte/vkui/dist/vkui.css";
-const maxlength = 200;
-
 
 function Suggest(props) {
+    const maxlength = 200;
+    const [selectedValue, setSelectedValue] = useState(null);
+    const [typedValue, setTypedValue] = useState(null);
+    const [error, setError] = useState(false)
+
+    const handleChange = e => {
+        setTypedValue(e.target.value);
+    }
+    const handleSelect = e => {
+        setSelectedValue(e.target.value);
+    }
+    const handleClick = e => {
+        if (selectedValue === null || typedValue === null)
+            setError(true)
+    }
+
     return(
         <Group>
         <FormLayout style={{ width: '100%' }}>
             <FormLayoutGroup mode="vertical">
-                <FormItem top="Цитата" bottom={'Максимальная длина цитаты составляет '+maxlength+' символов'}>
-                    <Textarea placeholder="Напишите здесь" maxLength={maxlength}/>
+                <FormItem
+                    top="Цитата"
+                    status={(error && typedValue === null) ? 'error' : ((error && typedValue === "") ? 'error' : 'default')}
+                    bottom={(error && typedValue === null) ? 'Заполните это поле' : ((error && typedValue === "") ? 'Заполните это поле' : 'Максимальная длина цитаты составляет '+maxlength+' символов')}>
+                    <Textarea onChange={handleChange} placeholder="Напишите здесь" maxLength={maxlength}/>
                 </FormItem>
-                <FormItem top="Категория">
+                <FormItem
+                    top="Категория"
+                    status={(error && selectedValue === null) ? 'error' : 'default'}
+                    bottom={(error && selectedValue === null) ? 'Выберите категорию' : ''}>
                     <CustomSelect
+                        onChange={handleSelect}
                         placeholder="Выберите категорию"
                         options={[{
                             label: 'Самурайская цитата',
@@ -42,7 +63,7 @@ function Suggest(props) {
                     />
                 </FormItem>
                 <FormItem>
-                    <Button size="m" style={{ width: '100%' }}>Предложить цитату</Button>
+                    <Button onClick={handleClick} size="m" style={{ width: '100%' }}>Предложить цитату</Button>
                 </FormItem>
             </FormLayoutGroup>
         </FormLayout>
