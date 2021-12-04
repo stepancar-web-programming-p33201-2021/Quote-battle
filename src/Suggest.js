@@ -23,8 +23,37 @@ function Suggest(props) {
         setSelectedValue(e.target.value);
     }
     const handleClick = e => {
+
+
         if (selectedValue === null || typedValue === null)
-            setError(true)
+
+        {setError(true)}
+        else {
+            let labels = new Map();
+            labels.set("0","samurai").set("1","wolf").set("2","cowboy").set("3","brat")
+            let details = {
+                'text': typedValue.toString(),
+                'type': labels.get(selectedValue.toString())
+            };
+
+            let formBody = [];
+            for (let property in details) {
+                let encodedKey = encodeURIComponent(property);
+                let encodedValue = encodeURIComponent(details[property]);
+                formBody.push(encodedKey + "=" + encodedValue);
+            }
+            formBody = formBody.join("&");
+
+
+            let url = 'http://localhost:8000/suggest'
+            fetch(url, {
+                method: 'POST',
+                headers: {  "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8", "Accept-Encoding" : "gzip, deflate, br"},
+                body: formBody
+            }).then(alert("Quote has been successfully added!"))
+
+
+        }
     }
 
     return(
