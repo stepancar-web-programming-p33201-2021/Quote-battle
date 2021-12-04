@@ -7,6 +7,7 @@ import cow from "../img/cow.png";
 import bod from "../img/bod.png";
 import "@vkontakte/vkui/dist/vkui.css";
 import {Icon28LikeFillRed, Icon28LikeOutline, Icon28ShareOutline} from "@vkontakte/icons";
+import bridge from "@vkontakte/vk-bridge";
 
 function CustomCard(props) {
     const [isFlipped, setFlipped] = React.useState(false);
@@ -51,6 +52,16 @@ function CustomCard(props) {
         setLiked((prev) => !prev)
     }
 
+    function shareQuote(e){
+        e.stopPropagation()
+        let quote_type = props.quote_type === "wolf" ? "волчью" : props.quote_type === "samurai" ? "самурайскую" : props.quote_type === "cowboy" ? "ковбойскую" : "пацанскую"
+        bridge.send("VKWebAppShowWallPostBox", {
+            "message": `Я проголосовал за ${quote_type} цитату в приложении QuoteBattle. Проголосуй и ты!`,
+            "attachments": "https://vk.com/app7977991_81677896"
+        }).then(r =>{
+            console.log(r.post_id)
+        });
+    }
 
     return (
 
@@ -69,7 +80,7 @@ function CustomCard(props) {
                     </div>
                     <Icon28LikeOutline id="unliked" style={isLiked === true ? {...like, ...invis} : {...like, ...vis}} onClick={clickLike}/>
                     <Icon28LikeFillRed id="liked" style={isLiked === true ? {...like, ...vis} : {...like, ...invis}} onClick={clickLike}/>
-                    <Icon28ShareOutline style={share}/>
+                    <Icon28ShareOutline onClick={shareQuote} style={share}/>
                 </div>
             </Card>
         </ReactCardFlip>
