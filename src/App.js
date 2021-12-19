@@ -23,11 +23,12 @@ import "@vkontakte/vkui/dist/vkui.css";
 import {
     Icon28StatisticsOutline,
     Icon28WriteOutline,
-    Icon28MessageHeartOutline, Icon28MoonOutline, Icon28SunOutline
+    Icon28MessageHeartOutline, Icon28MoonOutline, Icon28SunOutline, Icon28FaceIdOutline
 } from "@vkontakte/icons";
 import Vote from "./Vote";
 import Statistics from "./Statistics";
 import Suggest from "./Suggest";
+import Administrator from "./panels/Administrator";
 import bridge from "@vkontakte/vk-bridge";
 
 const App = () => {
@@ -35,16 +36,29 @@ const App = () => {
     const platform = usePlatform();
     const [activeStory, setActiveStory] = React.useState('vote');
     const [activeDarkScheme, setActiveAnotherScheme] = React.useState();
+    const [admin, setAdmin] = React.useState(false)
     const onStoryChange = (e) => setActiveStory(e.currentTarget.dataset.story);
     const isDesktop = viewWidth >= true//ViewWidth.TABLET;
     const hasHeader = platform !== VKCOM;
+    const admins = [
+        81677896, // Андрей
+        216746804, // Артем
+        96607288, // Миша Сизов
+        153343103, // Миша Фатов
+        17934739 // Маша
+    ]
 
     bridge.subscribe(({detail: {type, data}}) => {
         if (type === 'VKWebAppUpdateConfig') {
             setActiveAnotherScheme(data.scheme === 'space_gray')
         }
     });
-
+    bridge.send("VKWebAppGetUserInfo")
+        .then((r) => {
+            if (admins.includes(r.id)){
+                setAdmin(true)
+            }
+        })
     return (
 
         <ConfigProvider scheme={activeDarkScheme ? "space_gray" : "bright_light"}>
@@ -59,6 +73,18 @@ const App = () => {
                                 <Panel>
                                     {hasHeader && <PanelHeader/>}
                                     <Group>
+                                        {admin&&<Cell
+                                            disabled={activeStory === 'administrator'}
+                                            style={activeStory === 'administrator' ? {
+                                                backgroundColor: "var(--button_secondary_background)",
+                                                borderRadius: 8
+                                            } : {}}
+                                            data-story="administrator"
+                                            onClick={onStoryChange}
+                                            before={<Icon28FaceIdOutline/>}
+                                        >
+                                            admin
+                                        </Cell>}
                                         <Cell
                                             disabled={activeStory === 'suggest'}
                                             style={activeStory === 'suggest' ? {
@@ -108,6 +134,12 @@ const App = () => {
 
                             <Epic activeStory={activeStory} tabbar={!isDesktop &&
                             <Tabbar>
+                                {admin&&<TabbarItem
+                                    onClick={onStoryChange}
+                                    selected={activeStory === 'administrator'}
+                                    data-story="administrator"
+                                    text="Админ"
+                                ><Icon28FaceIdOutline/></TabbarItem>}
                                 <TabbarItem
                                     onClick={onStoryChange}
                                     selected={activeStory === 'suggest'}
@@ -128,6 +160,21 @@ const App = () => {
                                 ><Icon28StatisticsOutline/></TabbarItem>
                             </Tabbar>
                             }>
+                                {admin&&<View id="administrator" activePanel="administrator">
+                                    <Panel id="administrator">
+                                        <PanelHeader
+                                            left={
+                                                <PanelHeaderButton
+                                                    onClick={() => setActiveAnotherScheme((prev) => !prev)}>
+                                                    {activeDarkScheme ? <Icon28SunOutline/> : <Icon28MoonOutline/>}
+                                                </PanelHeaderButton>
+                                            }
+                                        >
+                                            Админ
+                                        </PanelHeader>
+                                        <Administrator/>
+                                    </Panel>
+                                </View>}
                                 <View id="suggest" activePanel="suggest">
                                     <Panel id="suggest">
                                         <PanelHeader
@@ -170,9 +217,7 @@ const App = () => {
                                         >
                                             Статистика
                                         </PanelHeader>
-                                        <Group>
-                                            <Statistics/>
-                                        </Group>
+                                        <Statistics/>
                                     </Panel>
                                 </View>
                             </Epic>
