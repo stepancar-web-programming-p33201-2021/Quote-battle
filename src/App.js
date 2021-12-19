@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import "./css/App.css"
 import {
     AdaptivityProvider,
@@ -23,7 +23,7 @@ import "@vkontakte/vkui/dist/vkui.css";
 import {
     Icon28StatisticsOutline,
     Icon28WriteOutline,
-    Icon28MessageHeartOutline, Icon28MoonOutline, Icon28SunOutline, Icon28FaceIdOutline
+    Icon28MessageHeartOutline, Icon28MoonOutline, Icon28SunOutline, Icon28BugOutline
 } from "@vkontakte/icons";
 import Vote from "./Vote";
 import Statistics from "./Statistics";
@@ -81,7 +81,7 @@ const App = () => {
                                             } : {}}
                                             data-story="administrator"
                                             onClick={onStoryChange}
-                                            before={<Icon28FaceIdOutline/>}
+                                            before={<Icon28BugOutline/>}
                                         >
                                             admin
                                         </Cell>}
@@ -139,7 +139,7 @@ const App = () => {
                                     selected={activeStory === 'administrator'}
                                     data-story="administrator"
                                     text="Админ"
-                                ><Icon28FaceIdOutline/></TabbarItem>}
+                                ><Icon28BugOutline/></TabbarItem>}
                                 <TabbarItem
                                     onClick={onStoryChange}
                                     selected={activeStory === 'suggest'}
