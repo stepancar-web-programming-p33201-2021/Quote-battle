@@ -1,0 +1,34 @@
+.woof{
+    background-image: url(assets/wolf.png);
+    background-size: cover
+}
+.samurai{
+    background-image: url(assets/sakura.jpg);
+    background-size: cover
+}
+.cowboy{
+    background-image: url(assets/cow.png);
+    background-size: cover
+}
+.guys{
+    background-image: url(assets/bod.png);
+    background-size: cover
+}
+.like{
+    position: absolute;
+    top: 80%;
+    left: 8%;
+    transform: translate(-50%, -50%)
+}
+.vis{
+    visibility: visible
+}
+.invis{
+    visibility: collapse
+}
+.share{
+    position: absolute;
+    top: 80%;
+    left: 92%;
+    transform: translate(-50%, -50%)
+}

@@ -3,19 +3,19 @@ import {
     Spacing
 } from "@vkontakte/vkui";
 import "@vkontakte/vkui/dist/vkui.css";
-import CustomCard  from "./panels/CustomCard";
+import CustomCard  from "../components/CustomCard";
 
 
 
-function Vote(props) {
+function Vote() {
     const [quotes, setQuotes] = useState([])
 
-    var url = new URL(`http://localhost:8000/battle/today`)
+    const url = new URL(`http://localhost:8000/battle/today`);
     fetch(url, {method:'GET',headers:{"Access-Control-Allow-Origin":'*'}}).then(response=>response.json())
     .then((response)=>{ setQuotes(response.quotes)})
 
     async function setLike(type){
-        var isLiked = localStorage.getItem(type)==='true'
+        const isLiked = localStorage.getItem(type) === 'true';
         localStorage.setItem(type, isLiked?'false':'true');
         await fetch('http://localhost:8000/battle/vote', {
             method:'POST',
@@ -25,7 +25,9 @@ function Vote(props) {
     }
 
     return(
+
             <div style={{paddingLeft: 16, paddingRight: 16}}>
+                <Spacing/>
                 {quotes.map(item=>
                 <div>
                     <CustomCard quote_type={item.type} quote={item.quote} 

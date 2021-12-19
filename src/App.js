@@ -1,5 +1,5 @@
-import React, {useEffect} from "react";
-import "./css/App.css"
+import React from "react";
+import "./App.css"
 import {
     AdaptivityProvider,
     useAdaptivity,
@@ -25,9 +25,9 @@ import {
     Icon28WriteOutline,
     Icon28MessageHeartOutline, Icon28MoonOutline, Icon28SunOutline
 } from "@vkontakte/icons";
-import Vote from "./Vote";
-import Statistics from "./Statistics";
-import Suggest from "./Suggest";
+import Vote from "./panels/Vote";
+import Statistics from "./panels/Statistics";
+import Suggest from "./panels/Suggest";
 import bridge from "@vkontakte/vk-bridge";
 
 const App = () => {
@@ -36,7 +36,7 @@ const App = () => {
     const [activeStory, setActiveStory] = React.useState('vote');
     const [activeDarkScheme, setActiveAnotherScheme] = React.useState();
     const onStoryChange = (e) => setActiveStory(e.currentTarget.dataset.story);
-    const isDesktop = viewWidth >= true//ViewWidth.TABLET;
+    const isDesktop = viewWidth >= true
     const hasHeader = platform !== VKCOM;
 
     bridge.subscribe(({detail: {type, data}}) => {
