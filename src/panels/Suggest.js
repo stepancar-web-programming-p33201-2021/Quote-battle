@@ -74,7 +74,7 @@ function Suggest() {
                     setSnackbar(
                         <Snackbar
                             layout="vertical"
-                            onClose={setSnackbar(null)}
+                            onClose={() => setSnackbar(null)}
                             before={<Icon16Done fill="#fff" width={14} height={14}/>}
                         >
                             Цитата успешно отправлена!
