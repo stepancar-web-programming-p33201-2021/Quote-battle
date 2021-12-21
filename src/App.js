@@ -1,5 +1,6 @@
 import React from "react";
-import "./css/App.css"
+import "./App.css"
+
 import {
     AdaptivityProvider,
     useAdaptivity,
@@ -25,10 +26,11 @@ import {
     Icon28WriteOutline,
     Icon28MessageHeartOutline, Icon28MoonOutline, Icon28SunOutline, Icon28BugOutline
 } from "@vkontakte/icons";
-import Vote from "./Vote";
-import Statistics from "./Statistics";
-import Suggest from "./Suggest";
-import Administrator from "./panels/Administrator";
+
+import Vote from "./panels/Vote";
+import Statistics from "./panels/Statistics";
+import Suggest from "./panels/Suggest";
+
 import bridge from "@vkontakte/vk-bridge";
 
 const App = () => {
@@ -38,7 +40,7 @@ const App = () => {
     const [activeDarkScheme, setActiveAnotherScheme] = React.useState();
     const [admin, setAdmin] = React.useState(false)
     const onStoryChange = (e) => setActiveStory(e.currentTarget.dataset.story);
-    const isDesktop = viewWidth >= true//ViewWidth.TABLET;
+    const isDesktop = viewWidth >= true
     const hasHeader = platform !== VKCOM;
     const admins = [
         81677896, // Андрей

@@ -35,7 +35,6 @@ input[type='number']:last-child{
     width: 32px;
 }
 
-
 .DatePicker{
     height: var(--height);
     padding: 8px;

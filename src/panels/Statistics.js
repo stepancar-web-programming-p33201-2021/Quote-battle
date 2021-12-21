@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-import DatePicker from './panels/DatePicker'
-import Bars from './panels/Bars';
-import StatQuote from './panels/StatQuote';
+import DatePicker from '../components/DatePicker'
+import Bars from '../components/Bars';
+import StatQuote from '../components/StatQuote';
 
 const empty=[{type:"wolf", quote:"—", votes: 0}, 
 {type:"samurai", quote:"—", votes: 0},
@@ -11,13 +11,13 @@ const empty=[{type:"wolf", quote:"—", votes: 0},
 
 
 
-const Statistics = (props) => {
+const Statistics = () => {
 	const [date, setDate] = useState(new Date())
     const [quotes, setQuotes] = useState(empty);
     const [place, setPlace] = useState(0);
 
 	async function getQuotes(Year, Month, Day){
-		var url = new URL(`http://localhost:8000/battle/${Day}-${Month+1}-${Year}`)
+		const url = new URL(`http://localhost:8000/battle/${Day}-${Month + 1}-${Year}`);
 		await fetch(url, {method:'GET',headers:{"Access-Control-Allow-Origin":'*'}}).then(response=>response.json())
 		.then((response)=>setQuotes(response.quotes.sort((a,b)=>a.votes>=b.votes?-1:1))).catch(setQuotes(empty))
 	}
