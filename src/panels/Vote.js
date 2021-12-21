@@ -10,6 +10,13 @@ import CustomCard  from "../components/CustomCard";
 function Vote() {
     const [quotes, setQuotes] = useState([])
 
+    var now=new Date();
+    var today=`${now.getDate()}-${now.getMonth()+1}-${now.getFullYear()}`;
+    if(localStorage.getItem('date')!==today){
+        ['wolf','samurai','brat','cowboy'].forEach((type)=>localStorage.setItem(type, 'false'))
+        localStorage.setItem('date', today)
+    }
+
     const url = new URL(`http://localhost:8000/battle/today`);
     fetch(url, {method:'GET',headers:{"Access-Control-Allow-Origin":'*'}}).then(response=>response.json())
     .then((response)=>{ setQuotes(response.quotes)})
