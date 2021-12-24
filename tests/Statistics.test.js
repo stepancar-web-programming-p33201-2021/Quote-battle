@@ -1,8 +1,8 @@
 import React from "react";
-import { render, unmountComponentAtNode } from "react-dom";
-import { act } from "react-dom/test-utils";
+import {render, unmountComponentAtNode} from "react-dom";
+import {act} from "react-dom/test-utils";
 
-import Suggest from "../src/Suggest";
+import Statistics from "../src/Statistics.js";
 
 let container = null;
 beforeEach(() => {
@@ -20,14 +20,6 @@ afterEach(() => {
 
 it("renders without crashing", () => {
     act(() => {
-        render(<Suggest />, container);
-    });
-})
-
-
-it("text on the button is correct", () => {
-    act(() => {
-        render(<Suggest />, container);
-    });
-    expect(container.querySelector("Button").textContent).toBe("Предложить цитату");
+        render(<Statistics/>, container);
+    })
 })

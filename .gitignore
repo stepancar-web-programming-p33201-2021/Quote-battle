@@ -11,6 +11,9 @@ package-lock.json
 # Optional npm cache directory
 .npm
 
+# Tests coverage reports
+/coverage
+
 # Prod Bundle
 /build
 
