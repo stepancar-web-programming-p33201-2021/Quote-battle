@@ -30,6 +30,7 @@ import {
 import Vote from "./panels/Vote";
 import Statistics from "./panels/Statistics";
 import Suggest from "./panels/Suggest";
+import Administrator from "./panels/Administrator";
 
 import bridge from "@vkontakte/vk-bridge";
 

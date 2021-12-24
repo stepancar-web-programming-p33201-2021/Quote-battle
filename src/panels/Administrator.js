@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {
     Group,
     FormLayoutGroup,
@@ -12,47 +12,59 @@ import "@vkontakte/vkui/dist/vkui.css";
 
 function Administrator() {
 
-    const [selectedValue, setSelectedValue] = useState(getCategory());
-    const [quote, setQuote] = useState(getQuote());
+    const [selectedValue, setSelectedValue] = useState('samurai');
+    const [quote, setQuote] = useState('—');
+    const [id, setId] = useState('0');
 
-    function getCategory() {
-        //TODO
-        return 3
+    async function getQuote() {
+        const url = new URL('http://localhost:8000/moderation/getRandomSuggestion');
+		await fetch(url, {method:'GET',headers:{"Access-Control-Allow-Origin":'*'}}).then(response=>response.json())
+		.then((response)=>{
+            setSelectedValue(response.type); 
+            setQuote(response.quote); 
+            setId(response._id);})
     }
-
-    function getQuote() {
-        //TODO
-        return "Random quote at "+ Date().toLocaleString()
-    }
+    useEffect(() => {
+        getQuote()
+      }, []);
 
     const handleSelect = e => {
         setSelectedValue(e.target.value);
     }
 
-    function acceptQuote() {
-        //TODO
-        alert("Good quote!")
-        setQuote(getQuote())  // сразу подгрузить новую
+    const handleChange = e => {
+        setQuote(e.target.value);
     }
 
-    function rejectQuote() {
-        //TODO
-        alert("Bad quote!")
-        setQuote(getQuote())  // сразу подгрузить новую
+    async function acceptQuote() {
+        await fetch(`http://localhost:8000/moderation/approve/${id}`, {
+            method:'POST',
+            headers:{"Access-Control-Allow-Origin":'*', "Content-Type": "application/x-www-form-urlencoded"}, 
+            body:`type=${selectedValue}&text=${quote}`
+        }).catch(err=>console.log(err))
+        getQuote();
+    }
+
+    async function rejectQuote() {
+        await fetch(`http://localhost:8000/moderation/decline/${id}`, {
+            method:'POST',
+            headers:{"Access-Control-Allow-Origin":'*', "Content-Type": "application/x-www-form-urlencoded"}
+        }).catch(err=>console.log(err))
+        getQuote();
     }
 
     const selectOptions = [{
         label: 'Самурайская цитата',
-        value: 0
+        value: 'samurai'
     }, {
         label: 'Волчья цитата',
-        value: 1
+        value: 'wolf'
     }, {
         label: 'Ковбойская цитата',
-        value: 2
+        value: 'cowboy'
     }, {
         label: 'Пацанская цитата',
-        value: 3
+        value: 'brat'
     }]
 
     return(
@@ -60,7 +72,7 @@ function Administrator() {
             <FormLayout style={{ width: '100%' }}>
                 <FormLayoutGroup mode="vertical">
                     <FormItem top="Цитата">
-                        <Textarea readOnly = "false" value={quote} />
+                        <Textarea value={quote} onChange={handleChange}/>
                     </FormItem>
                     <FormItem top="Категория">
                         <CustomSelect
@@ -70,10 +82,14 @@ function Administrator() {
                         />
                     </FormItem>
                     <FormItem>
-                        <Button onClick={acceptQuote} size="m" style={{ width: '100%' }}>Одобрить цитату</Button>
+                        <Button onClick={getQuote} size="m" style={{ width: '49%', float: 'left' }}>Взять другую цитату</Button>
+                        <Button onClick={rejectQuote} size="m" style={{ width: '49%', float: 'right'}} mode="destructive" >Отвергнуть цитату</Button>
+                    
                     </FormItem>
                     <FormItem>
-                        <Button onClick={rejectQuote} size="m" style={{ width: '100%'}} mode="destructive" >Отвергнуть цитату</Button>
+                        </FormItem>
+                    <FormItem>
+                        <Button onClick={acceptQuote} size="m" style={{ width: '100%' }}>Одобрить цитату</Button>
                     </FormItem>
                 </FormLayoutGroup>
             </FormLayout>
