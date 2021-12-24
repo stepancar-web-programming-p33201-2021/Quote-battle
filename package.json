@@ -8,24 +8,32 @@
     "build": "react-scripts build",
     "predeploy": "npm run build",
     "deploy": "vk-miniapps-deploy",
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "cross-env": "^7.0.3",
-    "react-hot-loader": "^4.13.0",
-    "react-scripts": "^4.0.3",
-    "jest": "26.6.0",
     "@babel/preset-env": "^7.14.9",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10"
+    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/user-event": "^12.1.10",
+    "cross-env": "^7.0.3",
+    "jest": "26.6.0",
+    "react-hot-loader": "^4.13.0",
+    "react-scripts": "^4.0.3"
   },
+
   "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.js*"
+    ],
     "transform": {
-      "^.+\\.(js|jsx)$": "babel-jest"
+      "^.+\\.js$": "babel-jest"
+    },
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|scss)$": "identity-obj-proxy"
     }
   },
   "dependencies": {
