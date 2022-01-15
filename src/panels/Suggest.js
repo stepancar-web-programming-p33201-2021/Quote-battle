@@ -10,6 +10,7 @@ import {
 } from "@vkontakte/vkui";
 import "@vkontakte/vkui/dist/vkui.css";
 import {Icon16Done} from "@vkontakte/icons";
+import { host } from '../config';
 
 function Suggest() {
     const maxlength = 200;
@@ -61,7 +62,7 @@ function Suggest() {
             }
             formBody = formBody.join("&");
 
-            let url = 'http://localhost:8000/suggest'
+            let url = `${host}/suggest`
             fetch(url, {
                 method: 'POST',
                 headers: {

@@ -9,6 +9,7 @@ import {
     Button
 } from "@vkontakte/vkui";
 import "@vkontakte/vkui/dist/vkui.css";
+import { host } from '../config';
 
 function Administrator() {
 
@@ -17,7 +18,7 @@ function Administrator() {
     const [id, setId] = useState('0');
 
     async function getQuote() {
-        const url = new URL('http://localhost:8000/moderation/getRandomSuggestion');
+        const url = new URL(`${host}/moderation/getRandomSuggestion`);
 		await fetch(url, {method:'GET',headers:{"Access-Control-Allow-Origin":'*'}}).then(response=>response.json())
 		.then((response)=>{
             setSelectedValue(response.type); 
@@ -37,7 +38,7 @@ function Administrator() {
     }
 
     async function acceptQuote() {
-        await fetch(`http://localhost:8000/moderation/approve/${id}`, {
+        await fetch(`${host}/moderation/approve/${id}`, {
             method:'POST',
             headers:{"Access-Control-Allow-Origin":'*', "Content-Type": "application/x-www-form-urlencoded"}, 
             body:`type=${selectedValue}&text=${quote}`
@@ -46,7 +47,7 @@ function Administrator() {
     }
 
     async function rejectQuote() {
-        await fetch(`http://localhost:8000/moderation/decline/${id}`, {
+        await fetch(`${host}/moderation/decline/${id}`, {
             method:'POST',
             headers:{"Access-Control-Allow-Origin":'*', "Content-Type": "application/x-www-form-urlencoded"}
         }).catch(err=>console.log(err))

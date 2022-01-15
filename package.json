@@ -12,7 +12,9 @@
   "keywords": [],
   "author": "",
   "license": "MIT",
+  "homepage":"/",
   "devDependencies": {
+    "@vkontakte/vk-miniapps-deploy": "0.0.25",
     "cross-env": "^7.0.3",
     "react-hot-loader": "^4.13.0",
     "react-scripts": "^4.0.3"
@@ -20,7 +22,6 @@
   "dependencies": {
     "@vkontakte/icons": "^1.135.0",
     "@vkontakte/vk-bridge": "^2.4.8",
-    "@vkontakte/vk-miniapps-deploy": "0.0.25",
     "@vkontakte/vkjs": "^0.22.1",
     "@vkontakte/vkui": "^4.22.2",
     "babel-eslint": "^10.1.0",
