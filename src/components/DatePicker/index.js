@@ -1,8 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {Icon20ChevronRightOutline as Right} from '@vkontakte/icons';
 import {Icon20ChevronLeftOutline as Left} from '@vkontakte/icons';
 import './index.css';
 import {useAppearance} from "@vkontakte/vkui";
+
 
 export const DatePicker = (props) => {
     const now = new Date();
@@ -10,6 +11,12 @@ export const DatePicker = (props) => {
     const [Month, setMonth] = useState(now.getMonth());
     const [Year, setYear] = useState(now.getFullYear());
     const appearance = useAppearance();
+
+    const DayRef = useRef();
+    const MonthRef = useRef();
+    const YearRef = useRef();
+
+    let userBlur=true;
 
     const light = {
         backgroundColor: '#f2f3f5',
@@ -23,14 +30,18 @@ export const DatePicker = (props) => {
     }
 
     function moveToNext(e) {
-        const form = e.target.form;
-        const index = Array.prototype.indexOf.call(form, e.target);
-        if (index < 2)
-            form.elements[index + 1].focus();
-        else
-            e.target.blur();
+        userBlur=false;
+        switch (e.target.className) {
+            case 'Day':
+                MonthRef.current.focus();
+                break;
+            case 'Month':
+                YearRef.current.focus();
+                break;
+            case 'Year':
+                e.target.blur();
+        }
     }
-
     function jump(e) {
         const x = e.target.value;
         const ml = e.target.getAttribute('maxlength');
@@ -42,19 +53,17 @@ export const DatePicker = (props) => {
 
     function changed(e) {
         const x = e.target.value;
-        const form = e.target.form;
-        const index = Array.prototype.indexOf.call(form, e.target);
-        switch (index) {
-            case 0:
+        switch (e.target.className) {
+            case 'Day':
                 updateDay(Month, Year, e.target)
                 break;
-            case 1:
+            case 'Month':
                 let newMonth = Math.max(0, Math.min(11, x - 1))
-                updateDay(newMonth, Year, form.elements[0])
+                updateDay(newMonth, Year, DayRef.current)
                 setMonth(newMonth)
                 break;
-            case 2:
-                updateDay(Month, x, form.elements[0])
+            case 'Year':
+                updateDay(Month, x, DayRef.current)
                 setYear(x)
                 break;
         }
@@ -76,7 +85,7 @@ export const DatePicker = (props) => {
         props.propagateDate(Year, Month, Day)
     }, [Year, Month, Day])
 
-    function selected(e) {
+    function selected(e){
         e.target.select();
     }
 
@@ -86,18 +95,25 @@ export const DatePicker = (props) => {
         }
     }
 
+    function blur(e){
+        if(userBlur)
+            changed(e)
+        else
+            userBlur=true;
+    }
+
     return (
         <div className="DatePicker" style={appearance === "light" ? light : dark}>
             <button className="prev" onClick={() => {
                 updateDate(-1)
             }}><Left/></button>
             <form className="Date">
-                <input type='number' className="Day" value={Day} maxLength="2"
-                       onChange={jump} onFocus={selected} onBlur={changed} onKeyDown={enter}/>.
-                <input type='number' className="Month" value={1 + Month} maxLength="2"
-                       onChange={jump} onFocus={selected} onBlur={changed} onKeyDown={enter}/>.
-                <input type='number' className="Year" value={Year} maxLength="4"
-                       onChange={jump} onFocus={selected} onBlur={changed} onKeyDown={enter}/>
+                <input type='number' className="Day" value={Day} maxLength="2" ref={DayRef}
+                       onChange={jump} onFocus={selected} onBlur={blur} onKeyDown={enter}/>.
+                <input type='number' className="Month" value={1 + Month} maxLength="2" ref={MonthRef}
+                       onChange={jump} onFocus={selected} onBlur={blur} onKeyDown={enter}/>.
+                <input type='number' className="Year" value={Year} maxLength="4" ref={YearRef}
+                       onChange={jump} onFocus={selected} onBlur={blur} onKeyDown={enter}/>
             </form>
             <button className="next" onClick={() => {
                 updateDate(1)
