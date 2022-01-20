@@ -1,0 +1,1 @@
+export let host='https://quote-battle.herokuapp.com';
