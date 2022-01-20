@@ -37,7 +37,7 @@ function CustomCard(props) {
     function clickLike(e) {
         e.stopPropagation()
         setLiked((prev) => !prev)
-        props.setLike(props.quote_type)
+        // props.setLike(props.quote_type)
     }
 
     function shareQuote(e) {
@@ -45,9 +45,8 @@ function CustomCard(props) {
         bridge.send("VKWebAppShowWallPostBox", {
             "message": `Я проголосовал за ${getQuoteType()} цитату в приложении QuoteBattle. Проголосуй и ты!`,
             "attachments": "https://vk.com/app7977991_81677896"
-        }).then(r => {
-            console.log(r.post_id)
-        });
+        }).then();
+        console.log(getQuoteType())
     }
 
     return (
