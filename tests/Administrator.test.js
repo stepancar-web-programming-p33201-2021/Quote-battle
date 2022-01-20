@@ -36,4 +36,6 @@ it("renders without crashing", async () => {
     await act(async () => {
         render(<Administrator />, container);
     });
+
+    global.fetch.mockRestore();
 })
