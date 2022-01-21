@@ -29,7 +29,7 @@ const Bars = (props) => {
     return (
         <div className="Bars">
             {props.quotes.map((item, index) => <Bar votes={item.votes} height={barPercent * item.votes / max}
-                                                    type={item.type} index={index}/>)}
+                                                    type={item.type} index={index} key={index}/>)}
         </div>
     )
 }

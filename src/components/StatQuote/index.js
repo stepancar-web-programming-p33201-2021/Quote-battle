@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {Icon28ChevronRightOutline as Right} from '@vkontakte/icons';
 import {Icon28ChevronLeftOutline as Left} from '@vkontakte/icons';
 import wolf from './assets/wolf.jpg';
@@ -22,9 +22,12 @@ function getImage(param) {
 }
 
 const StatQuote = (props) => {
-    const [place, setPlace] = [props.place, props.setPlace]
+    const [place, setPlace] = useState(props.place)
     const maxPlace = props.quotes.length - 1;
 
+    useEffect(()=>{
+        props.setPlace(place);
+    }, [place])
 
     return (
         <div className="StatQuote">
@@ -41,9 +44,10 @@ const StatQuote = (props) => {
                     <div
                         className="point"
                         value={item}
+                        key={item}
                         itemType={place === item ? 'active' : 'nan'}
                         onClick={(e) => {
-                            setPlace(e.target.getAttribute('value'))
+                            setPlace(Number(e.target.getAttribute('value')))
                         }}
                     />
                 )}

@@ -41,7 +41,7 @@ function Administrator() {
             method:'POST',
             headers:{"Access-Control-Allow-Origin":'*', "Content-Type": "application/x-www-form-urlencoded"}, 
             body:`type=${selectedValue}&text=${quote}`
-        }).catch(err=>console.log(err))
+        })
         getQuote();
     }
 
@@ -49,7 +49,7 @@ function Administrator() {
         await fetch(`http://localhost:8000/moderation/decline/${id}`, {
             method:'POST',
             headers:{"Access-Control-Allow-Origin":'*', "Content-Type": "application/x-www-form-urlencoded"}
-        }).catch(err=>console.log(err))
+        })
         getQuote();
     }
 
@@ -82,14 +82,14 @@ function Administrator() {
                         />
                     </FormItem>
                     <FormItem>
-                        <Button onClick={getQuote} size="m" style={{ width: '49%', float: 'left' }}>Взять другую цитату</Button>
-                        <Button onClick={rejectQuote} size="m" style={{ width: '49%', float: 'right'}} mode="destructive" >Отвергнуть цитату</Button>
+                        <Button onClick={getQuote} size="m" style={{ width: '49%', float: 'left' }} className="another">Взять другую цитату</Button>
+                        <Button onClick={rejectQuote} size="m" style={{ width: '49%', float: 'right'}} mode="destructive" className="reject">Отвергнуть цитату</Button>
                     
                     </FormItem>
                     <FormItem>
                         </FormItem>
                     <FormItem>
-                        <Button onClick={acceptQuote} size="m" style={{ width: '100%' }}>Одобрить цитату</Button>
+                        <Button onClick={acceptQuote} size="m" style={{ width: '100%' }} className="approve">Одобрить цитату</Button>
                     </FormItem>
                 </FormLayoutGroup>
             </FormLayout>
