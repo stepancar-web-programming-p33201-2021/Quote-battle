@@ -42,13 +42,13 @@ const Statistics = () => {
 	return (
 	<div className="Statistics">
 		<DatePicker propagateDate={(Y,M,D)=>{setDate(new Date(Y,M,D))}}/>
-		<div className="loader" hidden={present}>
+		<div className="noVote" hidden={loading||present}>
 			<p style={{color: "gray", textAlign: "center", fontStyle: "italic"}}>В этот день голосование не проводилось</p>
 		</div>
 		<div className="loader" hidden={!loading}>
             <Spinner size="large" style={{ margin: "40px 0" }}/>
         </div>
-		<div className="content" hidden={loading}>
+		<div className="content" hidden={loading||!present}>
 			<Bars quotes={quotes} setPlace={setPlace}  place={place}/>
 			<StatQuote quotes={quotes} setPlace={setPlace} place={place}/>
 		</div>
