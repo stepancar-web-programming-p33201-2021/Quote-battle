@@ -7,6 +7,7 @@ import {useAppearance} from "@vkontakte/vkui";
 
 export const DatePicker = (props) => {
     const now = new Date();
+    now.setMinutes(now.getMinutes()+now.getTimezoneOffset());
     const [Day, setDay] = useState(now.getDate());
     const [Month, setMonth] = useState(now.getMonth());
     const [Year, setYear] = useState(now.getFullYear());
@@ -117,7 +118,7 @@ export const DatePicker = (props) => {
             </form>
             <button className="next" onClick={() => {
                 updateDate(1)
-            }}><Right/></button>
+            }} ><Right/></button>
         </div>
     )
 }

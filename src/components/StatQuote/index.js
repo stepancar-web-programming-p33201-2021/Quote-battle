@@ -5,6 +5,7 @@ import wolf from './assets/wolf.jpg';
 import samurai from './assets/samurai.jpg';
 import cowboy from './assets/cowboy.jpg';
 import brat from './assets/brat.jpg';
+import none from './assets/none.jpg';
 
 import './index.css';
 
@@ -18,6 +19,8 @@ function getImage(param) {
             return cowboy;
         case 'brat':
             return brat;
+        case 'none':
+            return none;
     }
 }
 
@@ -32,7 +35,9 @@ const StatQuote = (props) => {
                 <button className="prev" onClick={() => setPlace(Math.max(place - 1, 0))} disabled={place === 0}><Left/>
                 </button>
                 <img src={getImage(props.quotes[place].type)} alt={props.quotes[place].type}/>
-                <p>{props.quotes[place].quote}</p>
+                <p className={props.quotes[place].quote.length<75?"normalText":props.quotes[place].quote.length<150?"smallText":"superSmallText"}>
+                    {props.quotes[place].quote}
+                </p>
                 <button className="next" onClick={() => setPlace(Math.min(place + 1, maxPlace))}
                         disabled={place === maxPlace}><Right/></button>
             </div>

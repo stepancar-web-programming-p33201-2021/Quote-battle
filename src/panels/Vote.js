@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
-    Spacing
+    Spacing,
+    Spinner
 } from "@vkontakte/vkui";
 import "@vkontakte/vkui/dist/vkui.css";
 import CustomCard  from "../components/CustomCard";
@@ -12,10 +13,13 @@ import bridge from "@vkontakte/vk-bridge";
 function Vote() {
     const [quotes, setQuotes] = useState([])
     const [liked, setLiked] = useState({wolf:'0',samurai:'0',cowboy:'0',brat:'0'})
+    const [loading, setLoading]=useState(false)
 
 
-    useEffect(()=>{
+    useEffect(async ()=>{
+        setLoading(true)
         var now=new Date();
+        now.setMinutes(now.getMinutes()+now.getTimezoneOffset());
         var today=`${now.getDate()}-${now.getMonth()+1}-${now.getFullYear()}`;
         bridge.send("VKWebAppStorageGet", {"keys": ['date','wolf','samurai','brat','cowboy']})
         .then((r)=>{
@@ -43,9 +47,9 @@ function Vote() {
         });
 
         const url = new URL(`${host}/battle/today`);
-        fetch(url, {method:'GET'}).then(response=>response.json())
+        await fetch(url, {method:'GET'}).then(response=>response.json())
         .then((response)=>{ setQuotes(response.quotes)})
-
+        setLoading(false)
     }, []);
     
     
@@ -71,13 +75,18 @@ function Vote() {
     return(
 
             <div style={{paddingLeft: 16, paddingRight: 16}}>
-                <Spacing/>
-                {quotes.map(item=>
-                <div>
-                    <CustomCard quote_type={item.type} quote={item.quote} 
-                    setLike={setLike} liked={liked[item.type]==='1'}/>
+                <div className="loader" hidden={!loading}>
+                    <Spinner size="large" style={{ margin: "40px 0" }}/>
+                </div>
+                <div className="content" hidden={loading}>
                     <Spacing/>
-                </div>)}
+                    {quotes.map(item=>
+                    <div>
+                        <CustomCard quote_type={item.type} quote={item.quote} key={item.type}
+                        setLike={setLike} liked={liked[item.type]==='1'}/>
+                        <Spacing/>
+                    </div>)}
+                </div>
             </div>
     )
 }

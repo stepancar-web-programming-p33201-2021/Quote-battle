@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useRef} from "react";
 import {
     Group,
     FormLayoutGroup,
@@ -14,10 +14,13 @@ import { host } from '../config';
 
 function Suggest() {
     const maxlength = 200;
-    const [selectedValue, setSelectedValue] = useState(null);
-    const [typedValue, setTypedValue] = useState(null);
+    const [selectedValue, setSelectedValue] = useState(4);
+    const [typedValue, setTypedValue] = useState('');
     const [error, setError] = useState(false)
     const [snackbar, setSnackbar] = useState(false)
+
+    const TextareaRef=useRef();
+    const SelectRef=useRef();
 
     const selectOptions = [{
         label: 'Не выбрана',
@@ -72,6 +75,8 @@ function Suggest() {
                 body: formBody
             }).then((r) => {
                 if (r.status === 200) {
+                    setTypedValue('');
+                    setSelectedValue(4);
                     setSnackbar(
                         <Snackbar
                             layout="vertical"
@@ -105,7 +110,7 @@ function Suggest() {
                         top="Цитата"
                         status={(error && typedValue === null) ? 'error' : ((error && typedValue === "") ? 'error' : 'default')}
                         bottom={(error && typedValue === null) ? 'Заполните это поле' : ((error && typedValue === "") ? 'Заполните это поле' : 'Максимальная длина цитаты составляет ' + maxlength + ' символов')}>
-                        <Textarea onChange={handleChange} placeholder="Напишите здесь" maxLength={maxlength}/>
+                        <Textarea onChange={handleChange} placeholder="Напишите здесь" maxLength={maxlength} value={typedValue}/>
                     </FormItem>
                     <FormItem
                         top="Категория"
@@ -115,6 +120,7 @@ function Suggest() {
                             onChange={handleSelect}
                             placeholder="Выберите категорию"
                             options={selectOptions}
+                            value={selectedValue}
                         />
                     </FormItem>
                     <FormItem>

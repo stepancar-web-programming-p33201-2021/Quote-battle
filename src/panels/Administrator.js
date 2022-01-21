@@ -17,13 +17,17 @@ function Administrator() {
     const [quote, setQuote] = useState('—');
     const [id, setId] = useState('0');
 
+    const [loading, setLoading]=useState(false);
+
     async function getQuote() {
+        setLoading(true);
         const url = new URL(`${host}/moderation/getRandomSuggestion`);
 		await fetch(url, {method:'GET',headers:{"Access-Control-Allow-Origin":'*'}}).then(response=>response.json())
 		.then((response)=>{
             setSelectedValue(response.type); 
             setQuote(response.quote); 
             setId(response._id);})
+        setLoading(false);
     }
     useEffect(() => {
         getQuote()
@@ -73,24 +77,25 @@ function Administrator() {
             <FormLayout style={{ width: '100%' }}>
                 <FormLayoutGroup mode="vertical">
                     <FormItem top="Цитата">
-                        <Textarea value={quote} onChange={handleChange}/>
+                        <Textarea value={quote} onChange={handleChange} disabled={loading}/>
                     </FormItem>
                     <FormItem top="Категория">
                         <CustomSelect
                             onChange={handleSelect}
                             value = {selectedValue}
                             options={selectOptions}
+                            disabled={loading}
                         />
                     </FormItem>
                     <FormItem>
-                        <Button onClick={getQuote} size="m" style={{ width: '49%', float: 'left' }}>Взять другую цитату</Button>
-                        <Button onClick={rejectQuote} size="m" style={{ width: '49%', float: 'right'}} mode="destructive" >Отвергнуть цитату</Button>
+                        <Button onClick={getQuote} size="m" style={{ width: '49%', float: 'left' }} disabled={loading}>Взять другую цитату</Button>
+                        <Button onClick={rejectQuote} size="m" style={{ width: '49%', float: 'right'}} mode="destructive" disabled={loading}>Отвергнуть цитату</Button>
                     
                     </FormItem>
                     <FormItem>
                         </FormItem>
                     <FormItem>
-                        <Button onClick={acceptQuote} size="m" style={{ width: '100%' }}>Одобрить цитату</Button>
+                        <Button onClick={acceptQuote} size="m" style={{ width: '100%' }} disabled={loading}>Одобрить цитату</Button>
                     </FormItem>
                 </FormLayoutGroup>
             </FormLayout>

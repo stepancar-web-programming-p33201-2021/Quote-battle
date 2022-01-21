@@ -2,6 +2,10 @@
     --quote-height: 120px;
     --img-width: 120px;
     --p-width: 200px;
+
+    --normal-text:16px;
+    --small-text:14px;
+    --super-small-text:12px;
   }
 
 .Quote p,
@@ -16,6 +20,15 @@
 .Quote p{
     width: var(--p-width);
     margin: 0;
+    font-size: var(--normal-text);
+}
+
+p.smallText{
+    font-size: var(--small-text);
+}
+
+p.superSmallText{
+    font-size: var(--super-small-text);
 }
 
 .Quote img{
