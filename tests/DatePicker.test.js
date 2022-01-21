@@ -116,7 +116,24 @@ it("User/program blur", ()=> {
         ReactTestUtils.Simulate.change(Year)
     });
     
-    expect(container.querySelector(".Day").valueAsNumber).toBe(1);
-    expect(container.querySelector(".Month").valueAsNumber).toBe(1);
-    expect(container.querySelector(".Year").valueAsNumber).toBe(2022);
+    expect(Day.valueAsNumber).toBe(1);
+    expect(Month.valueAsNumber).toBe(1);
+    expect(Year.valueAsNumber).toBe(2022);
+})
+
+it("Bounds", ()=> {
+    act(() => {
+        render(<DatePicker propagateDate={(Y,M,D)=>{}}/>, container);
+    });
+    const Day = container.querySelector(".Day");
+    const Month = container.querySelector(".Month");
+    act(() => {
+        Month.value=13
+        ReactTestUtils.Simulate.change(Month)
+        Day.value=32
+        ReactTestUtils.Simulate.change(Day)
+    }); 
+    
+    expect(Day.valueAsNumber).toBe(31);
+    expect(Month.valueAsNumber).toBe(12);
 })
